@@ -223,7 +223,7 @@ test('deployed backend synchronizes across two sessions and enforces viewer and 
     await expect(viewer.getByRole('heading',{name:'Bulut'})).toBeVisible();
     await expect(action(viewer,'edit')).toHaveCount(0);
     await expect(action(viewer,'delete')).toHaveCount(0);
-    await action(viewer,'memories').click();
+    await viewer.getByRole('button',{name:'Hatıralar',exact:true}).click();
     await expect(viewer.getByRole('button',{name:/Yalnızca Sahip/})).toHaveCount(0);
     await action(viewer,'feed').click();
     await expect(viewer.locator('#hint')).toContainText('Yem bırakmak');

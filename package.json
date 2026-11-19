@@ -9,7 +9,7 @@
     "preview": "vite preview --host 127.0.0.1",
     "test": "playwright test",
     "test:unit": "tsx --test tests/*.unit.ts",
-    "build:api": "esbuild backend/index.ts --bundle --platform=node --target=node24 --format=esm --outfile=backend/.bundle/index.mjs"
+    "build:api": "esbuild backend/index.ts --bundle --platform=node --target=node24 --format=esm --minify --outfile=backend/.bundle/index.mjs"
   },
   "dependencies": {
     "@fontsource-variable/bricolage-grotesque": "^5.2.9",

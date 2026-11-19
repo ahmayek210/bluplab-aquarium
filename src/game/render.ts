@@ -1,4 +1,4 @@
-import { decorations, type Decoration, type Fish } from '../model';
+import { decorations, species, type Decoration, type Fish } from '../model';
 import { clamp, type Creature, type Point, type World } from './world';
 
 type Art = Record<string,HTMLImageElement|null>;
@@ -93,7 +93,7 @@ export class Renderer {
       return;
     }
     const swimming=clamp(Math.hypot(f.vx,f.vy)/(45*u),.32,1.8);
-    const phase=t*(this.world.reduced?.7:1)*.91+f.phase*.7;
+    const phase=t*(this.world.reduced?.7:1)*species[f.data.species].fin+f.phase*.7;
     const frame=imgs[Math.floor((phase*(f.state==='rest'?.55:1)*8+Math.sin(t*2)*swimming+2000)%frames)];
     const h=w*frame.height/frame.width;
     const reaction=clamp(1-(t-f.reactedAt)/.85,0,1);
