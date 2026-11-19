@@ -1,0 +1,28 @@
+{
+  "name": "bluplab-aquarium",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "playwright test",
+    "test:unit": "tsx --test tests/*.unit.ts",
+    "build:api": "esbuild backend/index.ts --bundle --platform=node --target=node24 --format=esm --outfile=backend/.bundle/index.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/bricolage-grotesque": "^5.2.9",
+    "@fontsource-variable/nunito": "^5.2.8",
+    "@neondatabase/serverless": "^1.0.2",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^24.10.0",
+    "esbuild": "^0.25.12",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.2"
+  }
+}

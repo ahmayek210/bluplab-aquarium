@@ -1,0 +1,9 @@
+node_modules/
+dist/
+backend/.bundle/
+.env*
+!.env.example
+playwright-report/
+test-results/
+.neon/
+*.zip
