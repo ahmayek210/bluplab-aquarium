@@ -114,7 +114,7 @@ export function fishForm(f:Fish,editing:boolean){
       </fieldset>
     </div>
     <div class="fields"><label>Balığın adı<input name="name" required maxlength="32" value="${e(f.name)}" placeholder="Örn. Pofuduk"></label>
-    <label>Hatıranın başlığı<input name="title" required maxlength="80" value="${e(f.title)}" placeholder="Örn. İlk şarkımız"></label>
+    <label>Hatıranın başlığı<input name="title" required maxlength="80" value="${e(f.title)}"></label>
     <label class="wide">Hatıra<textarea name="description" required maxlength="500" rows="3" placeholder="Bu balık sana neyi hatırlatsın?">${e(f.description)}</textarea></label>
     <label>Kategori<select name="category">${textOption(categories,f.category)}</select></label>
     <label>Olay tarihi<input name="date" type="date" value="${e(f.date??'')}"></label>
