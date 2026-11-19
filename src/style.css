@@ -30,7 +30,7 @@ h1,h2,h3 { font-family: var(--headline); color: var(--ink); font-weight: 800; li
 p { overflow-wrap: anywhere; }
 img { max-width: 100%; }
 .icon { display: block; flex: 0 0 auto; }
-#app { position: fixed; inset: 0; width: 100%; height: 100dvh; overflow: hidden; }
+#app { position: fixed; inset: 0; width: var(--viewport-width,100%); height: var(--viewport-height,100dvh); overflow: hidden; }
 #aquarium { position: absolute; inset: 0; overflow: hidden; isolation: isolate; background: #8acff8; }
 #tank { display: block; position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; }
 #tank[data-mode="feed"], #tank[data-mode="bubbles"], [data-panel="decor"] #tank { cursor: crosshair; }
@@ -221,13 +221,11 @@ dialog::backdrop { background: #163c5865; }
   .dock { gap: 1px; padding-inline: 4px; max-width: 418px; }
   #app[data-panel]:not([data-panel=""]) .dock { width: calc(100% - var(--panel-w) - var(--left) - var(--right) - 7px); }
 }
-@media(orientation: portrait) {
-  .portrait-bypass { --panel-w: min(calc(100vw - var(--left) - var(--right)),480px); }
-  .portrait-bypass .panel { inset-block-end: calc(var(--bottom) + 70px); }
-  #app.portrait-bypass[data-panel]:not([data-panel=""]) .dock { left: 50%; transform: translateX(-50%); width: calc(100% - var(--left) - var(--right)); }
-  .portrait-bypass .aquarium-count { top: calc(var(--top) + 65px); bottom: auto; }
-  .portrait-bypass[data-panel]:not([data-panel=""]) .aquarium-count { visibility: hidden; }
-}
+.portrait-bypass { --panel-w: min(calc(var(--viewport-width,100vw) - var(--left) - var(--right)),480px); }
+.portrait-bypass .panel { inset-block-end: calc(var(--bottom) + 70px); }
+#app.portrait-bypass[data-panel]:not([data-panel=""]) .dock { left: 50%; transform: translateX(-50%); width: calc(100% - var(--left) - var(--right)); }
+.portrait-bypass .aquarium-count { top: calc(var(--top) + 65px); bottom: auto; }
+.portrait-bypass[data-panel]:not([data-panel=""]) .aquarium-count { visibility: hidden; }
 @media(pointer:coarse) {
   input:not([type="checkbox"]),textarea,select { font-size: 16px; }
   .switch { position: relative; }

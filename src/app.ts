@@ -22,7 +22,6 @@ export class App {
   private readonly storage=new Storage();
   private readonly sounds=new Sounds();
   private readonly fullscreen:Fullscreen;
-  private readonly rotation=window.matchMedia('(orientation: portrait) and (max-width: 900px)');
   private readonly motion=window.matchMedia('(prefers-reduced-motion: reduce)');
   private a:Aquarium;
   private game?:Awaited<ReturnType<typeof startGame>>;
@@ -133,7 +132,8 @@ export class App {
         if(key>=0){event.preventDefault();this.decor.nudge(key);this.syncDecor();}
       }
     });
-    this.rotation.addEventListener('change',this.syncPortrait);
+    window.addEventListener('resize',this.syncPortrait,{passive:true});
+    window.addEventListener('orientationchange',this.syncPortrait,{passive:true});
     this.motion.addEventListener('change',this.applyMotion);
     window.addEventListener('online',()=>{if(this.storage.token && !this.saving) void this.refresh(false);});
     window.addEventListener('focus',()=>{
@@ -142,9 +142,21 @@ export class App {
   }
 
   private syncPortrait=()=>{
-    const turn=this.rotation.matches&&!this.portraitAllowed;
+    const {innerWidth:width,innerHeight:height}=window;
+    const layout=document.documentElement;
+    const portrait=width<=900 && width<height;
+    // On some WebKit rotations the viewport dimensions update before the CSS layout viewport.
+    const waitingForLayout=(width<height)!==(layout.clientWidth<layout.clientHeight);
+    if(waitingForLayout){
+      this.root.style.setProperty('--viewport-width',width+'px');
+      this.root.style.setProperty('--viewport-height',height+'px');
+    }else{
+      this.root.style.removeProperty('--viewport-width');
+      this.root.style.removeProperty('--viewport-height');
+    }
+    const turn=portrait&&!this.portraitAllowed;
     this.box.inert=turn;
-    this.root.classList.toggle('portrait-bypass',this.portraitAllowed);
+    this.root.classList.toggle('portrait-bypass',portrait&&this.portraitAllowed);
     this.root.classList.toggle('portrait-on',turn);
   };
   private applyMotion=()=>{

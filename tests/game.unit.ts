@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { exampleAquarium, newId } from '../src/model';
 import { World } from '../src/game/world';
+import { tintPixels } from '../src/game/shade';
 
 function advance(w:World,seconds:number){
   for(let i=0;i<seconds*60;i++) w.step(1/60);
@@ -72,4 +73,15 @@ test('twenty-four fish survive resize and stay inside the swimming area',()=>{
   assert.equal(w.fish.length,24);
   assert.ok(w.fish.every(f=>f.x>=0&&f.x<=667&&f.y>=0&&f.y<=375));
   assert.ok(w.counts.social>0);
+});
+
+test('fallback color treatments preserve transparency and give each shade distinct colors',()=>{
+  const original=[251,202,82,229,45,55,67,0];
+  const shades=(['original','sun','lagoon','dusk'] as const).map(shade=>{
+    const pixels=new Uint8ClampedArray(original);
+    tintPixels(pixels,shade);
+    assert.deepEqual([...pixels.slice(3)],[229,45,55,67,0]);
+    return String(pixels.slice(0,3));
+  });
+  assert.equal(new Set(shades).size,4);
 });

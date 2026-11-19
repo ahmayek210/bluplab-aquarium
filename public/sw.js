@@ -1,5 +1,5 @@
 const root=self.registration.scope;
-const cacheName='bluplab-v1:'+root;
+const cacheName='bluplab-__BLUPLAB_RELEASE__:'+root;
 const art=[...Array.from({length:10},(_,i)=>'fish-'+i+'.webp'),...Array.from({length:10},(_,i)=>'decor-'+i+'.webp'),'west.webp','water.webp','east.webp','icon-192.png','icon-512.png'].map(f=>'art/'+f);
 const absolute=(f)=>new URL(f,root).href;
 self.addEventListener('install',event=>event.waitUntil((async()=>{

@@ -37,6 +37,8 @@ npm test
 
 Test yapılandırması derlemeyi `/bluplab-aquarium/` altında sunar. `PLAYWRIGHT_BASE_URL` verilirse aynı testler belirtilen yayını açar. `PLAYWRIGHT_CHROMIUM_EXECUTABLE` ile kurulu bir Chromium yolu seçilebilir. Simülasyon sayaçları ile bütünleşik tarayıcı testi için yerel derlemede `VITE_TEST_HOOK=1` kullan. Yayın derlemesinde kanca bulunmaz. Çevrimiçi test ayrı, rastgele yetki anahtarlı bir akvaryum kullanır.
 
+iPhone yerleşimini WebKit’te sınamak için `npx playwright install webkit` çalıştır ve `PLAYWRIGHT_WEBKIT=1` ile `npm test` komutunu kullan.
+
 ## Mimari
 
 - **Oyun** — Canvas 2D motoru, zaman adımlı hareket, seyrek çalışan davranış kararları ve komşuluk ızgarası. Balıklar yemi paylaşımlı hedef olarak kapmaz. Her parçayı bir balık sahiplenir. Bitkiler, kabarcıklar ve özel animasyonların efektleri sınırlı sayıda çizilir.

@@ -1,13 +1,9 @@
 import { decorations, species, type Decoration, type Fish } from '../model';
+import { colorFilters, tintPixels } from './shade';
 import { clamp, type Creature, type Point, type World } from './world';
 
 type Art = Record<string,HTMLImageElement|null>;
 const frames=8;
-export const colorFilters:Record<Fish['shade'],string>={
-  original:'none',sun:'sepia(.21) saturate(1.29) hue-rotate(-13deg)',
-  lagoon:'hue-rotate(31deg) saturate(.97)',dusk:'hue-rotate(-24deg) saturate(1.16)',
-};
-
 export class Renderer {
   readonly context:CanvasRenderingContext2D;
   private bg?:HTMLCanvasElement;
@@ -63,7 +59,14 @@ export class Renderer {
     const tinted=document.createElement('canvas');
     tinted.width=iw;tinted.height=ih;
     const tint=tinted.getContext('2d')!;
-    tint.filter=colorFilters[f.shade];tint.drawImage(img,0,0,iw,ih);
+    const nativeFilter=typeof tint.filter==='string';
+    if(nativeFilter) tint.filter=colorFilters[f.shade];
+    tint.drawImage(img,0,0,iw,ih);
+    if(!nativeFilter && f.shade!=='original'){
+      const pixels=tint.getImageData(0,0,iw,ih);
+      tintPixels(pixels.data,f.shade);
+      tint.putImageData(pixels,0,0);
+    }
     const result=Array.from({length:frames},(_,step)=>{
       const frame=document.createElement('canvas');
       frame.width=iw;frame.height=ih+14;
